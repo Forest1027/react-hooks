@@ -22,12 +22,16 @@ const Ingredients = () => {
         }).then(response => {
             return response.json();
         }).then(responseData => {
-            setUserIngredients(prevIngredients => [...prevIngredients, { id: responseData.name, ...ingredient}]);
+            setUserIngredients(prevIngredients => [...prevIngredients, {id: responseData.name, ...ingredient}]);
         });
     };
 
     const removeIngredientHandler = id => {
-      setUserIngredients(prevIngredients => prevIngredients.filter(ig => ig.id !== id))
+        fetch(`https://react-hooks-update-948aa-default-rtdb.firebaseio.com/ingredients/${id}.json`, {
+            method: 'DELETE'
+        }).then(response => {
+            setUserIngredients(prevIngredients => prevIngredients.filter(ig => ig.id !== id))
+        });
     };
 
     return (
