@@ -10,9 +10,6 @@ const Ingredients = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
 
-    // useCallback: return a memoized version of the callback function that only changes if one of the dependencies has changed,
-    // or else it will return a cached version
-    // it is helpful to prevent unnecessary renders.
     const filteredIngredientsHandler = useCallback(filteredIngredients => {
         setUserIngredients(filteredIngredients);
     }, [setUserIngredients]);
@@ -42,12 +39,12 @@ const Ingredients = () => {
             setUserIngredients(prevIngredients => prevIngredients.filter(ig => ig.id !== id))
         }).catch(error => {
             setError(error.message);
+            setIsLoading(false);
         });
     };
 
     const clearError = () => {
         setError(null);
-        setIsLoading(false);
     }
 
     return (

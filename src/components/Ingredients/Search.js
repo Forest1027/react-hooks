@@ -8,11 +8,6 @@ const Search = React.memo(props => {
     const [enteredFilter, setEnteredFilter] = useState('');
     const inputRef = useRef();
 
-    // useEffect acts like componentDidUpdate.
-    // It runs the function after every component update (re-render).
-    // But you can change how often it gets re-run using the second input.
-    // with [] as second argument, useEffect acts like componentDidMount.
-    // It runs only once after the first render
     useEffect(() => {
         const timer = setTimeout(() => {
             // js closure. enteredFilter here contains the old value the it just stepped into setTimeout function
