@@ -2,11 +2,13 @@ import React, {useState, useCallback} from 'react';
 
 import IngredientForm from './IngredientForm';
 import IngredientList from "./IngredientList";
+import ErrorModal from "../UI/ErrorModal";
 import Search from './Search';
 
 const Ingredients = () => {
     const [userIngredients, setUserIngredients] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState(null);
 
     // useCallback: return a memoized version of the callback function that only changes if one of the dependencies has changed,
     // or else it will return a cached version
@@ -26,6 +28,8 @@ const Ingredients = () => {
             return response.json();
         }).then(responseData => {
             setUserIngredients(prevIngredients => [...prevIngredients, {id: responseData.name, ...ingredient}]);
+        }).catch(error => {
+            setError(error.message);
         });
     };
 
@@ -36,11 +40,19 @@ const Ingredients = () => {
         }).then(response => {
             setIsLoading(false);
             setUserIngredients(prevIngredients => prevIngredients.filter(ig => ig.id !== id))
+        }).catch(error => {
+            setError(error.message);
         });
     };
 
+    const clearError = () => {
+        setError(null);
+        setIsLoading(false);
+    }
+
     return (
         <div className="App">
+            {error && <ErrorModal onClose={clearError}>{error}</ErrorModal>}
             <IngredientForm onAddIngredient={addIngredientHandler} loading={isLoading}/>
 
             <section>
