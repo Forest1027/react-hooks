@@ -10,6 +10,9 @@
 - with [] as second argument, useEffect acts like componentDidMount.
 - It runs only once after the first render
 
+# useReducer
+- React will re-render the component whenever your reducer returns the new state.
+
 # State Batching
 - All state updates from one and the same synchronous event handler are batched together.
 - After setNewState(), you can't immediately use the new state when NOT using the function form
